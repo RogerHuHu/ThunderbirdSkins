@@ -1,0 +1,546 @@
+/*
+ * macOS Mail Style for Thunderbird 115+
+ * ======================================
+ * Mimics the clean, minimal look of Apple Mail.
+ *
+ * Profile: lvrho3o7.default-esr
+ * Version: 1.0
+ */
+
+/* ===== Global Variables ===== */
+:root {
+  /* macOS system font stack (Segoe UI on Windows) */
+  --font-apple: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei",
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Color palette inspired by macOS Mail */
+  --mac-sidebar-bg: #f0f0f5;
+  --mac-sidebar-hover: #e4e4ec;
+  --mac-sidebar-selected: #d0d0e0;
+  --mac-sidebar-text: #333333;
+  --mac-accent: #007aff;
+  --mac-accent-light: #e8f0fe;
+  --mac-toolbar-bg: #f8f8fa;
+  --mac-border: #d1d1d6;
+  --mac-content-bg: #ffffff;
+  --mac-text-primary: #1d1d1f;
+  --mac-text-secondary: #86868b;
+  --mac-row-hover: #f5f5f7;
+  --mac-selected-row: #e8e8ed;
+  --mac-radius: 6px;
+
+  /* Override Thunderbird toolbar & search bar variables */
+  --toolbar-bgcolor: var(--mac-toolbar-bg) !important;
+  --toolbar-background-color: var(--mac-toolbar-bg) !important;
+  --toolbox-background-color: var(--mac-toolbar-bg) !important;
+  --arrowpanel-background: var(--mac-content-bg) !important;
+
+  /* Search bar (shadow DOM) - match toolbar background */
+  --toolbar-field-background-color: var(--mac-toolbar-bg) !important;
+  --toolbar-field-border-color: var(--mac-border) !important;
+  --toolbar-field-color: var(--mac-text-primary) !important;
+  --toolbar-field-focus-border-color: var(--mac-accent) !important;
+  --toolbar-field-background-color-focus: var(--mac-content-bg) !important;
+  --toolbar-field-text-color-focus: var(--mac-text-primary) !important;
+
+  /* Search bar shadow DOM variables */
+  --search-bar-background: var(--mac-toolbar-bg) !important;
+  --search-bar-border-color: var(--mac-border) !important;
+  --search-bar-color: var(--mac-text-primary) !important;
+  --search-bar-focus-background: var(--mac-content-bg) !important;
+
+  /* Unified toolbar container */
+  --unified-toolbar-background: var(--mac-toolbar-bg) !important;
+
+  /* Tabs toolbar */
+  --tabs-toolbar-background-color: var(--mac-toolbar-bg) !important;
+
+  /* Fix tab top border line and accent */
+  --chrome-content-separator-color: transparent !important;
+  --tabline-color: var(--mac-accent) !important;
+}
+
+/* ===== Global Font ===== */
+/* Apply to text elements only, never touch icon fonts */
+label,
+textbox,
+treechildren,
+description,
+hbox > span,
+vbox > span,
+.text-link,
+.tabmail-tab,
+.toolbarbutton-text,
+menupopup menuitem label,
+menupopup menu label,
+#folderTree .tree-view-row-cell,
+#threadTree .tree-view-row-cell,
+#threadTree .sender-container,
+#threadTree .subject,
+#threadTree .date,
+#messageHeader .header-value,
+#messageHeader .header-label,
+#status-bar,
+#quick-filter-bar,
+dialog,
+.tab-text,
+.folder-name,
+.unread-count,
+.folder-count-badge,
+.message-header-subject,
+.header-row .header-label,
+.header-row .header-value {
+  font-family: var(--font-apple) !important;
+}
+
+/* ===== Spaces Toolbar (leftmost icon bar) ===== */
+#spacesToolbar {
+  background: var(--mac-sidebar-bg) !important;
+  border-right: 1px solid var(--mac-border) !important;
+  padding: 4px 2px !important;
+}
+
+#spacesToolbar button {
+  border-radius: var(--mac-radius) !important;
+  margin: 2px 0 !important;
+  transition: background 0.15s ease !important;
+}
+
+#spacesToolbar button:hover {
+  background: var(--mac-sidebar-hover) !important;
+}
+
+#spacesToolbar button[selected="true"] {
+  background: var(--mac-sidebar-selected) !important;
+}
+
+/* ===== Unified Toolbar ===== */
+#unifiedToolbar {
+  background: var(--mac-toolbar-bg) !important;
+  border-bottom: 1px solid var(--mac-border) !important;
+  box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.05) !important;
+  min-height: 38px !important;
+}
+
+/* Ensure all toolbar children share the same background */
+#unifiedToolbar toolbar,
+#unifiedToolbar toolbaritem,
+#unifiedToolbar toolbarpaletteitem,
+#unifiedToolbar hbox,
+#unifiedToolbar vbox {
+  background: transparent !important;
+}
+
+#unifiedToolbar toolbarbutton {
+  border-radius: var(--mac-radius) !important;
+  transition: background 0.15s ease !important;
+}
+
+#unifiedToolbar toolbarbutton:hover {
+  background: var(--mac-sidebar-hover) !important;
+}
+
+/* ===== Search Bar ===== */
+/* Search bar uses shadow DOM; colors are controlled via CSS variables in :root above */
+
+/* ===== Folder Pane (Left Sidebar) ===== */
+#folderTree,
+#folderPane {
+  background: var(--mac-sidebar-bg) !important;
+  border-right: 1px solid var(--mac-border) !important;
+}
+
+/* Folder pane header */
+#folderPaneHeader,
+.folder-pane-header {
+  background: var(--mac-sidebar-bg) !important;
+  border-bottom: 1px solid var(--mac-border) !important;
+  padding: 8px 12px !important;
+}
+
+/* Folder tree rows */
+#folderTree tree-view-row,
+#folderTree .tree-view-row {
+  border-radius: var(--mac-radius) !important;
+  margin: 1px 6px !important;
+  padding: 4px 8px !important;
+  transition: background 0.12s ease !important;
+}
+
+#folderTree tree-view-row:hover,
+#folderTree .tree-view-row:hover {
+  background: var(--mac-sidebar-hover) !important;
+}
+
+#folderTree tree-view-row[selected="true"],
+#folderTree .tree-view-row[selected="true"] {
+  background: var(--mac-sidebar-selected) !important;
+}
+
+/* Folder names */
+#folderTree .folder-name,
+#folderTree tree-view-row .tree-view-row-cell {
+  color: var(--mac-sidebar-text) !important;
+  font-size: 13px !important;
+}
+
+/* Folder icons - slightly muted */
+#folderTree .tree-view-row-icon,
+#folderTree .folder-icon {
+  opacity: 0.85;
+}
+
+/* Unread count badge */
+#folderTree .folder-count-badge,
+#folderTree .unread-count {
+  font-size: 11px !important;
+  color: var(--mac-text-secondary) !important;
+  font-weight: 500 !important;
+}
+
+/* ===== Thread Pane (Message List) ===== */
+#threadTree,
+#threadPane {
+  background: var(--mac-content-bg) !important;
+}
+
+/* Thread pane header / column headers */
+#threadCols,
+.thread-header {
+  background: var(--mac-toolbar-bg) !important;
+  border-bottom: 1px solid var(--mac-border) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: var(--mac-text-secondary) !important;
+}
+
+/* Message rows */
+#threadTree tree-view-row,
+#threadTree .tree-view-row {
+  border-radius: var(--mac-radius) !important;
+  margin: 1px 4px !important;
+  padding: 6px 8px !important;
+  transition: background 0.12s ease !important;
+  border-bottom: none !important;
+}
+
+#threadTree tree-view-row:hover,
+#threadTree .tree-view-row:hover {
+  background: var(--mac-row-hover) !important;
+}
+
+#threadTree tree-view-row[selected="true"],
+#threadTree .tree-view-row[selected="true"] {
+  background: var(--mac-selected-row) !important;
+}
+
+/* Sender name */
+#threadTree .sender-container,
+#threadTree .tree-view-row-cell:first-child {
+  font-weight: 500 !important;
+  color: var(--mac-text-primary) !important;
+  font-size: 13px !important;
+}
+
+/* Subject line */
+#threadTree .subject,
+#threadTree .tree-view-row-subject {
+  color: var(--mac-text-primary) !important;
+  font-size: 13px !important;
+}
+
+/* Date column */
+#threadTree .date,
+#threadTree .tree-view-row-date {
+  color: var(--mac-text-secondary) !important;
+  font-size: 12px !important;
+}
+
+/* Unread messages - bold sender */
+#threadTree tree-view-row[unread="true"] .sender-container,
+#threadTree tree-view-row[unread="true"] .tree-view-row-cell:first-child {
+  font-weight: 700 !important;
+}
+
+/* Thread tree separator - subtle */
+#threadTree tree-view-row:not(:last-child) {
+  border-bottom: 1px solid #f0f0f2 !important;
+}
+
+/* ===== Message Pane ===== */
+#messagePane,
+#messageDisplayPane {
+  background: var(--mac-content-bg) !important;
+}
+
+/* Message header area */
+#messageHeader,
+.message-header-container {
+  background: var(--mac-content-bg) !important;
+  border-bottom: 1px solid #eee !important;
+  padding: 12px 16px !important;
+}
+
+/* From/To labels */
+.message-header-label,
+.header-row .header-label {
+  color: var(--mac-text-secondary) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* Subject in message header */
+#messageHeader .subject,
+.message-header-subject {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: var(--mac-text-primary) !important;
+}
+
+/* ===== Message Body (userContent.css handles more, but basic here) ===== */
+#messageBrowser,
+#messagepane {
+  background: var(--mac-content-bg) !important;
+}
+
+/* ===== Tabs ===== */
+/* Tab bar - remove the gradient that creates the dark top border */
+#tabs-toolbar {
+  background: var(--mac-toolbar-bg) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  min-height: 32px !important;
+  padding-block-start: 2px !important;
+}
+
+/* Tab outer wrapper */
+.tabmail-tab {
+  appearance: none !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--mac-text-secondary) !important;
+  font-size: 13px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transition: background 0.12s ease !important;
+}
+
+/* Tab background (inner element that shows the fill) */
+.tabmail-tab .tab-background {
+  background: transparent !important;
+  border-radius: var(--mac-radius) var(--mac-radius) 0 0 !important;
+  margin: 0 !important;
+  transition: background 0.12s ease !important;
+}
+
+/* Tab content area (text + icon) */
+.tabmail-tab .tab-content {
+  padding: 6px 16px !important;
+}
+
+/* Hover state */
+.tabmail-tab:hover .tab-background:not([selected="true"]) {
+  background: var(--mac-sidebar-hover) !important;
+}
+
+/* Selected tab */
+.tabmail-tab[selected="true"] .tab-background {
+  background: var(--mac-content-bg) !important;
+  box-shadow: none !important;
+}
+
+.tabmail-tab[selected="true"] {
+  color: var(--mac-text-primary) !important;
+  font-weight: 500 !important;
+}
+
+/* Tab accent line - macOS style thin indicator */
+.tab-line {
+  block-size: 2px !important;
+  margin-inline: 3px !important;
+  border-radius: 3px !important;
+}
+
+.tab-line[selected="true"] {
+  background-color: var(--mac-accent) !important;
+}
+
+/* Tab close button */
+.tabmail-tab .tab-close-button {
+  border-radius: 3px !important;
+  opacity: 0.5 !important;
+  transition: opacity 0.12s ease !important;
+}
+
+.tabmail-tab:hover .tab-close-button {
+  opacity: 1 !important;
+}
+
+/* ===== Scrollbar (macOS-style thin) ===== */
+scrollbar {
+  --scrollbar-width: 8px !important;
+}
+
+scrollbar thumb {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 4px !important;
+  min-height: 30px !important;
+}
+
+scrollbar thumb:hover {
+  background: rgba(0, 0, 0, 0.35) !important;
+}
+
+scrollbar track {
+  background: transparent !important;
+}
+
+/* ===== Buttons ===== */
+.toolbarbutton-1,
+.unified-toolbar-button,
+button[type="toolbar"] {
+  border-radius: var(--mac-radius) !important;
+  transition: background 0.12s ease !important;
+}
+
+.toolbarbutton-1:hover,
+.unified-toolbar-button:hover {
+  background: var(--mac-sidebar-hover) !important;
+}
+
+/* Primary/accent buttons */
+button.primary,
+button[default="true"] {
+  background: var(--mac-accent) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: var(--mac-radius) !important;
+  font-weight: 500 !important;
+}
+
+button.primary:hover,
+button[default="true"]:hover {
+  background: #0066d6 !important;
+}
+
+/* ===== Splitter / Pane Separators ===== */
+splitter {
+  background: var(--mac-border) !important;
+  min-width: 1px !important;
+  max-width: 1px !important;
+  border: none !important;
+}
+
+/* ===== Status Bar ===== */
+#status-bar {
+  background: var(--mac-toolbar-bg) !important;
+  border-top: 1px solid var(--mac-border) !important;
+  font-size: 12px !important;
+  color: var(--mac-text-secondary) !important;
+}
+
+/* ===== Context Menus ===== */
+menupopup,
+[role="menu"] {
+  border-radius: 8px !important;
+  border: 1px solid var(--mac-border) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+  padding: 4px 0 !important;
+}
+
+menuitem,
+[role="menuitem"] {
+  border-radius: 4px !important;
+  margin: 0 4px !important;
+  padding: 4px 8px !important;
+  font-size: 13px !important;
+}
+
+menuitem:hover,
+[role="menuitem"]:hover {
+  background: var(--mac-accent) !important;
+  color: white !important;
+}
+
+/* ===== Dialog Windows ===== */
+dialog,
+.window-dialog {
+  border-radius: 10px !important;
+}
+
+/* ===== Address Book ===== */
+#addressbookPane {
+  background: var(--mac-content-bg) !important;
+}
+
+/* ===== Calendar ===== */
+#calendar-pane {
+  background: var(--mac-content-bg) !important;
+}
+
+/* ===== Reduce visual noise ===== */
+
+/* Remove heavy borders */
+treechildren::-moz-tree-separator {
+  border: none !important;
+  height: 1px !important;
+  background: #f0f0f2 !important;
+}
+
+/* Subtle focus rings */
+:focus-visible {
+  outline: 2px solid rgba(0, 122, 255, 0.4) !important;
+  outline-offset: -1px !important;
+  border-radius: var(--mac-radius) !important;
+}
+
+/* ===== Composition Window ===== */
+#msgcomposeWindow {
+  background: var(--mac-content-bg) !important;
+}
+
+#compose-toolbar {
+  background: var(--mac-toolbar-bg) !important;
+  border-bottom: 1px solid var(--mac-border) !important;
+}
+
+/* ===== Quick Filter Bar ===== */
+#quick-filter-bar {
+  background: var(--mac-toolbar-bg) !important;
+  border-bottom: 1px solid var(--mac-border) !important;
+  border-top: none !important;
+}
+
+#qfb-qs-textbox {
+  border-radius: var(--mac-radius) !important;
+  border: 1px solid var(--mac-border) !important;
+  background: var(--mac-content-bg) !important;
+}
+
+#qfb-qs-textbox:focus {
+  border-color: var(--mac-accent) !important;
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2) !important;
+}
+
+/* ===== Notifications ===== */
+.notificationbox .notification {
+  border-radius: var(--mac-radius) !important;
+  margin: 4px !important;
+}
+
+/* ===== Fix for dark theme conflicts ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mac-sidebar-bg: #2c2c2e;
+    --mac-sidebar-hover: #3a3a3c;
+    --mac-sidebar-selected: #48484a;
+    --mac-sidebar-text: #e5e5ea;
+    --mac-toolbar-bg: #1c1c1e;
+    --mac-border: #3a3a3c;
+    --mac-content-bg: #1c1c1e;
+    --mac-text-primary: #f5f5f7;
+    --mac-text-secondary: #98989d;
+    --mac-row-hover: #2c2c2e;
+    --mac-selected-row: #3a3a3c;
+  }
+}

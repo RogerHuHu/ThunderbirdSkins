@@ -1,0 +1,149 @@
+/*
+ * macOS Mail Style - Message Content (userContent.css)
+ * =====================================================
+ * Styles the message body display area.
+ *
+ * Profile: lvrho3o7.default-esr
+ * Version: 1.0
+ */
+
+/* ===== Message Body Font ===== */
+body {
+  font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei",
+    "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #1d1d1f !important;
+  background: #ffffff !important;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+  max-width: none !important;
+}
+
+/* ===== Links ===== */
+a {
+  color: #007aff !important;
+  text-decoration: none !important;
+}
+
+a:hover {
+  text-decoration: underline !important;
+}
+
+/* Links inside buttons or colored backgrounds - ensure white text */
+a button,
+button a,
+a[role="button"],
+.button a,
+.btn a,
+td a[style*="background"],
+a[style*="background"] {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+/* Links that have their own background color (CTA buttons in emails) */
+a[href][style*="background"] {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+/* Links inside table cells with background color (common email button pattern) */
+td[style*="background"] a,
+td[bgcolor] a {
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+/* ===== Blockquotes (email reply chains) ===== */
+blockquote {
+  border-left: 3px solid #d1d1d6 !important;
+  margin: 8px 0 !important;
+  padding: 4px 12px !important;
+  color: #6e6e73 !important;
+  background: transparent !important;
+}
+
+blockquote blockquote {
+  border-left-color: #a8a8ad !important;
+}
+
+blockquote blockquote blockquote {
+  border-left-color: #c7c7cc !important;
+}
+
+/* ===== Images ===== */
+img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* ===== Tables ===== */
+table {
+  border-collapse: collapse !important;
+  max-width: 100% !important;
+}
+
+/* ===== Code blocks ===== */
+pre, code {
+  font-family: "SF Mono", "Menlo", "Consolas", monospace !important;
+  font-size: 13px !important;
+  background: #f5f5f7 !important;
+  border-radius: 4px !important;
+}
+
+pre {
+  padding: 12px !important;
+  overflow-x: auto !important;
+}
+
+code {
+  padding: 2px 4px !important;
+}
+
+/* ===== Horizontal rules ===== */
+hr {
+  border: none !important;
+  border-top: 1px solid #e5e5ea !important;
+  margin: 16px 0 !important;
+}
+
+/* ===== Headings ===== */
+h1, h2, h3, h4, h5, h6 {
+  color: #1d1d1f !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+}
+
+h1 { font-size: 20px !important; margin: 20px 0 10px !important; }
+h2 { font-size: 17px !important; margin: 16px 0 8px !important; }
+h3 { font-size: 15px !important; margin: 12px 0 6px !important; }
+
+/* ===== Dark mode for message body ===== */
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #f5f5f7 !important;
+    background: #1c1c1e !important;
+  }
+
+  a {
+    color: #0a84ff !important;
+  }
+
+  blockquote {
+    border-left-color: #48484a !important;
+    color: #98989d !important;
+  }
+
+  pre, code {
+    background: #2c2c2e !important;
+  }
+
+  hr {
+    border-top-color: #3a3a3c !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #f5f5f7 !important;
+  }
+}
