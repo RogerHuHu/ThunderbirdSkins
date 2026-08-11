@@ -1,0 +1,912 @@
+/*
+ * Aurora Theme for Thunderbird 115+
+ * ==================================
+ * A light, airy skin inspired by modern email clients.
+ * Features soft shadows, rounded corners, pastel tag badges,
+ * and a decorative sidebar footer.
+ *
+ * Version: 2.0
+ */
+
+/* ===== Aurora Color Variables ===== */
+:root {
+  /* Font stack */
+  --aurora-font: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei",
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Core palette — light blue sidebar theme */
+  --aurora-bg: #ffffff;
+  --aurora-sidebar-bg: #f0f5fa;
+  --aurora-sidebar-hover: #e3ecf5;
+  --aurora-sidebar-selected: #d4e3f3;
+  --aurora-sidebar-text: #2c3e50;
+  --aurora-accent: #3b82f6;
+  --aurora-accent-hover: #2563eb;
+  --aurora-accent-light: #eff6ff;
+  --aurora-toolbar-bg: #ffffff;
+  --aurora-border: #e2e8f0;
+  --aurora-border-light: #f1f5f9;
+  --aurora-content-bg: #ffffff;
+  --aurora-text-primary: #1e293b;
+  --aurora-text-secondary: #64748b;
+  --aurora-text-muted: #94a3b8;
+  --aurora-row-hover: #f8fafc;
+  --aurora-selected-row: #eff6ff;
+  --aurora-radius: 8px;
+  --aurora-radius-sm: 6px;
+  --aurora-radius-lg: 12px;
+  --aurora-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --aurora-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  /* Tag badge colors */
+  --aurora-tag-work-bg: #dbeafe;
+  --aurora-tag-work-text: #1d4ed8;
+  --aurora-tag-notes-bg: #dcfce7;
+  --aurora-tag-notes-text: #15803d;
+  --aurora-tag-finance-bg: #dcfce7;
+  --aurora-tag-finance-text: #15803d;
+  --aurora-tag-billing-bg: #ffedd5;
+  --aurora-tag-billing-text: #c2410c;
+  --aurora-tag-personal-bg: #f3e8ff;
+  --aurora-tag-personal-text: #7e22ce;
+  --aurora-tag-high-bg: #fee2e2;
+  --aurora-tag-high-text: #dc2626;
+  --aurora-tag-important-bg: #dbeafe;
+  --aurora-tag-important-text: #1d4ed8;
+  --aurora-tag-legal-bg: #ffedd5;
+  --aurora-tag-legal-text: #c2410c;
+  --aurora-tag-priority-bg: #fee2e2;
+  --aurora-tag-priority-text: #dc2626;
+  --aurora-tag-facilities-bg: #dcfce7;
+  --aurora-tag-facilities-text: #15803d;
+
+  /* ===== Thunderbird Variable Overrides ===== */
+  --toolbar-bgcolor: var(--aurora-toolbar-bg) !important;
+  --toolbar-background-color: var(--aurora-toolbar-bg) !important;
+  --toolbox-background-color: var(--aurora-toolbar-bg) !important;
+  --arrowpanel-background: var(--aurora-bg) !important;
+
+  /* Search bar (shadow DOM) */
+  --toolbar-field-background-color: var(--aurora-sidebar-bg) !important;
+  --toolbar-field-border-color: var(--aurora-border) !important;
+  --toolbar-field-color: var(--aurora-text-primary) !important;
+  --toolbar-field-focus-border-color: var(--aurora-accent) !important;
+  --toolbar-field-background-color-focus: var(--aurora-bg) !important;
+  --toolbar-field-text-color-focus: var(--aurora-text-primary) !important;
+
+  /* Search bar shadow DOM variables */
+  --search-bar-background: var(--aurora-sidebar-bg) !important;
+  --search-bar-border-color: var(--aurora-border) !important;
+  --search-bar-color: var(--aurora-text-primary) !important;
+  --search-bar-focus-background: var(--aurora-bg) !important;
+
+  /* Unified toolbar */
+  --unified-toolbar-background: var(--aurora-toolbar-bg) !important;
+
+  /* Tabs toolbar */
+  --tabs-toolbar-background-color: var(--aurora-toolbar-bg) !important;
+  --chrome-content-separator-color: transparent !important;
+  --tabline-color: var(--aurora-accent) !important;
+}
+
+/* ===== Global Font ===== */
+label,
+textbox,
+treechildren,
+description,
+hbox > span,
+vbox > span,
+.text-link,
+.tabmail-tab,
+.toolbarbutton-text,
+menupopup menuitem label,
+menupopup menu label,
+#folderTree .tree-view-row-cell,
+#threadTree .tree-view-row-cell,
+#threadTree .sender-container,
+#threadTree .subject,
+#threadTree .date,
+#messageHeader .header-value,
+#messageHeader .header-label,
+#status-bar,
+#quick-filter-bar,
+dialog,
+.tab-text,
+.folder-name,
+.unread-count,
+.folder-count-badge,
+li[is="folder-tree-row"] > .container > .name,
+.message-header-subject,
+.header-row .header-label,
+.header-row .header-value {
+  font-family: var(--aurora-font) !important;
+}
+
+/* ===== Spaces Toolbar (leftmost icon bar) ===== */
+#spacesToolbar {
+  background: #f7f9fc !important;
+  border-right: 1px solid var(--aurora-border-light) !important;
+  padding: 8px 4px !important;
+}
+
+#spacesToolbar button {
+  border-radius: var(--aurora-radius) !important;
+  margin: 4px 0 !important;
+  padding: 9px !important;
+  transition: all 0.15s ease !important;
+}
+
+#spacesToolbar button:hover {
+  background: var(--aurora-sidebar-hover) !important;
+}
+
+#spacesToolbar button[selected="true"] {
+  background: var(--aurora-accent-light) !important;
+  color: var(--aurora-accent) !important;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.15) !important;
+}
+
+/* ===== Unified Toolbar ===== */
+#unifiedToolbar {
+  background: var(--aurora-toolbar-bg) !important;
+  border-bottom: 1px solid var(--aurora-border-light) !important;
+  box-shadow: var(--aurora-shadow) !important;
+  min-height: 42px !important;
+  padding: 4px 12px !important;
+}
+
+#unifiedToolbar toolbar,
+#unifiedToolbar toolbaritem,
+#unifiedToolbar toolbarpaletteitem,
+#unifiedToolbar hbox,
+#unifiedToolbar vbox {
+  background: transparent !important;
+}
+
+#unifiedToolbar toolbarbutton {
+  border-radius: var(--aurora-radius-sm) !important;
+  padding: 6px 12px !important;
+  transition: all 0.15s ease !important;
+  font-size: 13px !important;
+}
+
+#unifiedToolbar toolbarbutton:hover {
+  background: var(--aurora-row-hover) !important;
+}
+
+/* New Message button - prominent */
+#unifiedToolbar toolbarbutton[default="true"],
+#unifiedToolbar button.primary,
+#button-newmsg {
+  background: var(--aurora-accent) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: var(--aurora-radius) !important;
+  font-weight: 600 !important;
+  padding: 8px 20px !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
+  transition: all 0.15s ease !important;
+}
+
+#unifiedToolbar toolbarbutton[default="true"]:hover,
+#unifiedToolbar button.primary:hover,
+#button-newmsg:hover {
+  background: var(--aurora-accent-hover) !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Get Messages dropdown */
+#button-getmsg {
+  border-radius: var(--aurora-radius-sm) !important;
+  border: 1px solid var(--aurora-border) !important;
+  background: var(--aurora-bg) !important;
+  padding: 6px 12px !important;
+}
+
+/* Tag button */
+#button-tag {
+  border-radius: var(--aurora-radius-sm) !important;
+  border: 1px solid var(--aurora-border) !important;
+  background: var(--aurora-bg) !important;
+}
+
+/* Quick Filter button */
+#quick-filter-button {
+  border-radius: var(--aurora-radius-sm) !important;
+  border: 1px solid var(--aurora-border) !important;
+  background: var(--aurora-bg) !important;
+}
+
+/* ===== Search Bar ===== */
+/* Colors controlled via CSS variables in :root */
+
+/* ===== Folder Pane (Left Sidebar) ===== */
+#folderTree,
+#folderPane {
+  background: var(--aurora-sidebar-bg) !important;
+  border-right: 1px solid var(--aurora-border-light) !important;
+}
+
+/* Folder pane header */
+#folderPaneHeader,
+.folder-pane-header {
+  background: var(--aurora-sidebar-bg) !important;
+  border-bottom: 1px solid var(--aurora-border-light) !important;
+  padding: 12px 16px !important;
+}
+
+/* Account/Server row — email address display */
+li[is="folder-tree-row"][data-server-type] > .container > .name {
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+  color: var(--aurora-text-primary) !important;
+  letter-spacing: 0.2px !important;
+}
+
+/* Account icon (mail server icon) */
+li[is="folder-tree-row"][data-server-type] > .container > .icon {
+  --icon-color: var(--aurora-accent) !important;
+  stroke: var(--aurora-accent) !important;
+  fill: rgba(59, 130, 246, 0.12) !important;
+  inline-size: 18px !important;
+  block-size: 18px !important;
+}
+
+/* Folder tree rows */
+li[is="folder-tree-row"] {
+  border-radius: var(--aurora-radius-sm) !important;
+  margin: 1px 4px !important;
+  transition: all 0.12s ease !important;
+}
+
+li[is="folder-tree-row"] > .container {
+  padding: 5px 8px !important;
+  border-radius: var(--aurora-radius-sm) !important;
+}
+
+li[is="folder-tree-row"]:hover > .container {
+  background: var(--aurora-sidebar-hover) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+li[is="folder-tree-row"][selected="true"] > .container,
+li[is="folder-tree-row"][aria-selected="true"] > .container {
+  background: var(--aurora-sidebar-selected) !important;
+  border-left: 3px solid var(--aurora-accent) !important;
+  padding-left: 5px !important;
+}
+
+/* Folder names */
+li[is="folder-tree-row"] > .container > .name {
+  color: var(--aurora-sidebar-text) !important;
+  font-size: 13px !important;
+}
+
+/* Unread count badge */
+li[is="folder-tree-row"] > .container > .folder-count-badge,
+li[is="folder-tree-row"] > .container > .unread-count {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  background: var(--aurora-accent) !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+  padding: 1px 7px !important;
+  min-width: 20px !important;
+  text-align: center !important;
+}
+
+/* Folder icons — colored by folder type (Thunderbird 115+ DOM) */
+/* Icons are <img> elements colored via --icon-color + -moz-context-properties */
+li[is="folder-tree-row"] > .container > .icon {
+  inline-size: 16px !important;
+  block-size: 16px !important;
+  transition: stroke 0.12s ease !important;
+}
+
+/* Inbox — blue */
+li[is="folder-tree-row"][data-folder-type="inbox"] > .container > .icon {
+  --icon-color: #3b82f6 !important;
+  stroke: #3b82f6 !important;
+  fill: rgba(59, 130, 246, 0.15) !important;
+}
+
+/* Drafts — rose/pink */
+li[is="folder-tree-row"][data-folder-type="drafts"] > .container > .icon {
+  --icon-color: #e11d48 !important;
+  stroke: #e11d48 !important;
+  fill: rgba(225, 29, 72, 0.15) !important;
+}
+
+/* Sent — green */
+li[is="folder-tree-row"][data-folder-type="sent"] > .container > .icon {
+  --icon-color: #16a34a !important;
+  stroke: #16a34a !important;
+  fill: rgba(22, 163, 74, 0.15) !important;
+}
+
+/* Trash — red-orange */
+li[is="folder-tree-row"][data-folder-type="trash"] > .container > .icon {
+  --icon-color: #ea580c !important;
+  stroke: #ea580c !important;
+  fill: rgba(234, 88, 12, 0.15) !important;
+}
+
+/* Junk/Spam — amber */
+li[is="folder-tree-row"][data-folder-type="junk"] > .container > .icon {
+  --icon-color: #d97706 !important;
+  stroke: #d97706 !important;
+  fill: rgba(217, 119, 6, 0.15) !important;
+}
+
+/* Archive — slate gray */
+li[is="folder-tree-row"][data-folder-type="archive"] > .container > .icon {
+  --icon-color: #64748b !important;
+  stroke: #64748b !important;
+  fill: rgba(100, 116, 139, 0.15) !important;
+}
+
+/* Outbox — teal */
+li[is="folder-tree-row"][data-folder-type="outbox"] > .container > .icon {
+  --icon-color: #0891b2 !important;
+  stroke: #0891b2 !important;
+  fill: rgba(8, 145, 178, 0.15) !important;
+}
+
+/* Templates — purple */
+li[is="folder-tree-row"][data-folder-type="templates"] > .container > .icon {
+  --icon-color: #7c3aed !important;
+  stroke: #7c3aed !important;
+  fill: rgba(124, 58, 237, 0.15) !important;
+}
+
+/* Virtual/Saved Search — pink */
+li[is="folder-tree-row"][data-folder-type="virtual"] > .container > .icon {
+  --icon-color: #db2777 !important;
+  stroke: #db2777 !important;
+  fill: rgba(219, 39, 119, 0.15) !important;
+}
+
+/* Regular folders (no special type) — soft blue-gray */
+li[is="folder-tree-row"]:not([data-folder-type]) > .container > .icon {
+  --icon-color: #64748b !important;
+  stroke: #64748b !important;
+  fill: rgba(100, 116, 139, 0.12) !important;
+}
+
+/* ===== Sidebar Bottom Fade ===== */
+/* Subtle light-blue fade at the bottom of the folder pane */
+#folderPane::after,
+#folderTree::after {
+  content: "" !important;
+  display: block !important;
+  height: 60px !important;
+  background: linear-gradient(
+    180deg,
+    rgba(240, 245, 250, 0) 0%,
+    rgba(227, 236, 245, 0.4) 100%
+  ) !important;
+  margin-top: auto !important;
+  position: relative !important;
+  opacity: 1 !important;
+}
+
+/* ===== Thread Pane (Message List) ===== */
+#threadTree,
+#threadPane {
+  background: var(--aurora-content-bg) !important;
+}
+
+/* Thread pane header / column headers */
+#threadCols,
+.thread-header {
+  background: var(--aurora-bg) !important;
+  border-bottom: 1px solid var(--aurora-border-light) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--aurora-text-muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3px !important;
+}
+
+/* Filter tabs (All, Unread, Starred, etc.) */
+#threadPane .tabmail-tab,
+#threadPane .quick-filter-bar .tabmail-tab {
+  font-size: 12px !important;
+  padding: 4px 14px !important;
+  border-radius: 20px !important;
+  margin: 2px 2px !important;
+  background: transparent !important;
+  color: var(--aurora-text-secondary) !important;
+  border: 1px solid transparent !important;
+  transition: all 0.15s ease !important;
+}
+
+#threadPane .tabmail-tab:hover {
+  background: var(--aurora-row-hover) !important;
+  border-color: var(--aurora-border) !important;
+}
+
+#threadPane .tabmail-tab[selected="true"] {
+  background: var(--aurora-accent) !important;
+  color: #ffffff !important;
+  border-color: var(--aurora-accent) !important;
+  font-weight: 500 !important;
+}
+
+/* Message rows */
+#threadTree tree-view-row,
+#threadTree .tree-view-row {
+  border-radius: var(--aurora-radius-sm) !important;
+  margin: 1px 6px !important;
+  padding: 7px 10px !important;
+  transition: all 0.12s ease !important;
+  border-bottom: none !important;
+}
+
+#threadTree tree-view-row:hover,
+#threadTree .tree-view-row:hover {
+  background: var(--aurora-row-hover) !important;
+  box-shadow: var(--aurora-shadow) !important;
+}
+
+#threadTree tree-view-row[selected="true"],
+#threadTree .tree-view-row[selected="true"] {
+  background: var(--aurora-selected-row) !important;
+  border-left: 2px solid var(--aurora-accent) !important;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.08) !important;
+}
+
+/* Sender name */
+#threadTree .sender-container,
+#threadTree .tree-view-row-cell:first-child {
+  font-weight: 600 !important;
+  color: var(--aurora-text-primary) !important;
+  font-size: 13px !important;
+}
+
+/* Subject line */
+#threadTree .subject,
+#threadTree .tree-view-row-subject {
+  color: var(--aurora-text-primary) !important;
+  font-size: 13px !important;
+}
+
+/* Date column */
+#threadTree .date,
+#threadTree .tree-view-row-date {
+  color: var(--aurora-text-muted) !important;
+  font-size: 12px !important;
+}
+
+/* Unread messages */
+#threadTree tree-view-row[unread="true"] .sender-container,
+#threadTree tree-view-row[unread="true"] .tree-view-row-cell:first-child {
+  font-weight: 700 !important;
+}
+
+/* Unread indicator — refined blue dot */
+#threadTree tree-view-row[unread="true"]::before,
+#threadTree .tree-view-row[unread="true"]::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: var(--aurora-accent) !important;
+  margin-right: 6px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Star/flag indicator */
+#threadTree .tree-view-row-starred .tree-view-row-icon,
+#threadTree tree-view-row[flagged="true"] .tree-view-row-icon {
+  color: #f59e0b !important;
+}
+
+/* Thread tree separator — very subtle */
+#threadTree tree-view-row:not(:last-child) {
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5) !important;
+}
+
+/* ===== Tag Badges in Message List ===== */
+/* These target the tag label elements in the thread tree */
+#threadTree .tag-cell label,
+#threadTree .tree-view-row-cell .tag-label,
+#threadTree [class*="tag"] label {
+  border-radius: 12px !important;
+  padding: 2px 10px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  border: none !important;
+}
+
+/* ===== Message Pane ===== */
+#messagePane,
+#messageDisplayPane {
+  background: var(--aurora-content-bg) !important;
+}
+
+/* Message header area */
+#messageHeader,
+.message-header-container {
+  background: var(--aurora-content-bg) !important;
+  border-bottom: 1px solid var(--aurora-border-light) !important;
+  padding: 16px 20px !important;
+}
+
+/* Message subject */
+#messageHeader .subject,
+.message-header-subject {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--aurora-text-primary) !important;
+  margin-bottom: 12px !important;
+}
+
+/* From/To labels */
+.message-header-label,
+.header-row .header-label {
+  color: var(--aurora-text-muted) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* From/To values */
+.message-header-value,
+.header-row .header-value,
+#messageHeader .header-value {
+  color: var(--aurora-accent) !important;
+  font-size: 13px !important;
+}
+
+/* Reply/Reply All/Forward buttons */
+#messageHeader toolbarbutton,
+.message-header-actions toolbarbutton,
+#hdrReplyButton,
+#hdrReplyAllButton,
+#hdrForwardButton {
+  border-radius: var(--aurora-radius-sm) !important;
+  border: 1px solid var(--aurora-border) !important;
+  background: var(--aurora-bg) !important;
+  padding: 8px 16px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--aurora-text-primary) !important;
+  transition: all 0.15s ease !important;
+  box-shadow: var(--aurora-shadow) !important;
+}
+
+#messageHeader toolbarbutton:hover,
+.message-header-actions toolbarbutton:hover,
+#hdrReplyButton:hover,
+#hdrReplyAllButton:hover,
+#hdrForwardButton:hover {
+  background: var(--aurora-row-hover) !important;
+  border-color: var(--aurora-accent) !important;
+  color: var(--aurora-accent) !important;
+  box-shadow: var(--aurora-shadow-md) !important;
+}
+
+/* Message tags in header (Important, Work, etc.) */
+#messageHeader .tag,
+.message-header-tags .tag,
+#messageHeader [class*="tag"] {
+  border-radius: 12px !important;
+  padding: 3px 12px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+/* ===== Message Body ===== */
+#messageBrowser,
+#messagepane {
+  background: var(--aurora-content-bg) !important;
+}
+
+/* ===== Tabs ===== */
+#tabs-toolbar {
+  background: var(--aurora-toolbar-bg) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  min-height: 34px !important;
+  padding-block-start: 2px !important;
+}
+
+.tabmail-tab {
+  appearance: none !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--aurora-text-secondary) !important;
+  font-size: 13px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transition: all 0.12s ease !important;
+}
+
+.tabmail-tab .tab-background {
+  background: transparent !important;
+  border-radius: var(--aurora-radius-sm) var(--aurora-radius-sm) 0 0 !important;
+  margin: 0 !important;
+  transition: all 0.12s ease !important;
+}
+
+.tabmail-tab .tab-content {
+  padding: 6px 16px !important;
+}
+
+.tabmail-tab:hover .tab-background:not([selected="true"]) {
+  background: var(--aurora-row-hover) !important;
+}
+
+.tabmail-tab[selected="true"] .tab-background {
+  background: var(--aurora-content-bg) !important;
+  box-shadow: none !important;
+}
+
+.tabmail-tab[selected="true"] {
+  color: var(--aurora-text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.tab-line {
+  block-size: 2px !important;
+  margin-inline: 3px !important;
+  border-radius: 3px !important;
+}
+
+.tab-line[selected="true"] {
+  background-color: var(--aurora-accent) !important;
+}
+
+.tabmail-tab .tab-close-button {
+  border-radius: 3px !important;
+  opacity: 0.4 !important;
+  transition: opacity 0.12s ease !important;
+}
+
+.tabmail-tab:hover .tab-close-button {
+  opacity: 1 !important;
+}
+
+/* ===== Scrollbar ===== */
+scrollbar {
+  --scrollbar-width: 6px !important;
+}
+
+scrollbar thumb {
+  background: rgba(0, 0, 0, 0.15) !important;
+  border-radius: 3px !important;
+  min-height: 30px !important;
+}
+
+scrollbar thumb:hover {
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+scrollbar track {
+  background: transparent !important;
+}
+
+/* ===== Buttons ===== */
+.toolbarbutton-1,
+.unified-toolbar-button,
+button[type="toolbar"] {
+  border-radius: var(--aurora-radius-sm) !important;
+  transition: all 0.12s ease !important;
+}
+
+.toolbarbutton-1:hover,
+.unified-toolbar-button:hover {
+  background: var(--aurora-row-hover) !important;
+}
+
+button.primary,
+button[default="true"] {
+  background: var(--aurora-accent) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: var(--aurora-radius) !important;
+  font-weight: 600 !important;
+  padding: 8px 20px !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25) !important;
+  transition: all 0.15s ease !important;
+}
+
+button.primary:hover,
+button[default="true"]:hover {
+  background: var(--aurora-accent-hover) !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ===== Splitter / Pane Separators ===== */
+splitter {
+  background: var(--aurora-border-light) !important;
+  min-width: 1px !important;
+  max-width: 1px !important;
+  border: none !important;
+}
+
+/* ===== Status Bar ===== */
+#status-bar {
+  background: var(--aurora-toolbar-bg) !important;
+  border-top: 1px solid var(--aurora-border-light) !important;
+  font-size: 12px !important;
+  color: var(--aurora-text-secondary) !important;
+  padding: 4px 12px !important;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Online indicator */
+#status-bar .status-text,
+#status-bar label[value="Online"] {
+  color: #22c55e !important;
+  font-weight: 500 !important;
+}
+
+/* Today Pane button */
+#today-pane-button,
+#status-bar button[label*="Today"] {
+  border-radius: var(--aurora-radius-sm) !important;
+  border: 1px solid var(--aurora-border) !important;
+  background: var(--aurora-bg) !important;
+  font-size: 12px !important;
+  padding: 3px 10px !important;
+}
+
+/* ===== Context Menus ===== */
+menupopup,
+[role="menu"] {
+  border-radius: var(--aurora-radius-lg) !important;
+  border: 1px solid var(--aurora-border) !important;
+  box-shadow: var(--aurora-shadow-md) !important;
+  padding: 6px 0 !important;
+}
+
+menuitem,
+[role="menuitem"] {
+  border-radius: var(--aurora-radius-sm) !important;
+  margin: 2px 6px !important;
+  padding: 6px 12px !important;
+  font-size: 13px !important;
+  transition: all 0.1s ease !important;
+}
+
+menuitem:hover,
+[role="menuitem"]:hover {
+  background: var(--aurora-accent) !important;
+  color: white !important;
+}
+
+/* ===== Dialog Windows ===== */
+dialog,
+.window-dialog {
+  border-radius: var(--aurora-radius-lg) !important;
+  box-shadow: var(--aurora-shadow-md) !important;
+}
+
+/* ===== Address Book ===== */
+#addressbookPane {
+  background: var(--aurora-content-bg) !important;
+}
+
+/* ===== Calendar ===== */
+#calendar-pane {
+  background: var(--aurora-content-bg) !important;
+}
+
+/* ===== Reduce visual noise ===== */
+treechildren::-moz-tree-separator {
+  border: none !important;
+  height: 1px !important;
+  background: var(--aurora-border-light) !important;
+}
+
+/* Subtle focus rings */
+:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.4) !important;
+  outline-offset: -1px !important;
+  border-radius: var(--aurora-radius-sm) !important;
+}
+
+/* ===== Composition Window ===== */
+#msgcomposeWindow {
+  background: var(--aurora-content-bg) !important;
+}
+
+#compose-toolbar {
+  background: var(--aurora-toolbar-bg) !important;
+  border-bottom: 1px solid var(--aurora-border-light) !important;
+  box-shadow: var(--aurora-shadow) !important;
+}
+
+/* ===== Quick Filter Bar ===== */
+#quick-filter-bar {
+  background: var(--aurora-toolbar-bg) !important;
+  border-bottom: 1px solid var(--aurora-border-light) !important;
+  border-top: none !important;
+  padding: 6px 12px !important;
+}
+
+#qfb-qs-textbox {
+  border-radius: 20px !important;
+  border: 1px solid var(--aurora-border) !important;
+  background: var(--aurora-bg) !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  transition: all 0.15s ease !important;
+}
+
+#qfb-qs-textbox:focus {
+  border-color: var(--aurora-accent) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important;
+}
+
+/* ===== Notifications ===== */
+.notificationbox .notification {
+  border-radius: var(--aurora-radius) !important;
+  margin: 6px !important;
+  box-shadow: var(--aurora-shadow) !important;
+}
+
+/* ===== Attachment Area ===== */
+.attachmentList,
+.attachment-item {
+  border-radius: var(--aurora-radius-sm) !important;
+  border: 1px solid var(--aurora-border-light) !important;
+  background: var(--aurora-bg) !important;
+  padding: 8px 12px !important;
+  transition: all 0.12s ease !important;
+}
+
+.attachment-item:hover {
+  border-color: var(--aurora-accent) !important;
+  box-shadow: var(--aurora-shadow) !important;
+}
+
+/* ===== Dark Mode ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --aurora-bg: #0f172a;
+    --aurora-sidebar-bg: #162033;
+    --aurora-sidebar-hover: #1e3050;
+    --aurora-sidebar-selected: #1e3a5f;
+    --aurora-sidebar-text: #e2e8f0;
+    --aurora-accent: #60a5fa;
+    --aurora-accent-hover: #93bbfd;
+    --aurora-accent-light: #1e3a5f;
+    --aurora-toolbar-bg: #1e293b;
+    --aurora-border: #334155;
+    --aurora-border-light: #293548;
+    --aurora-content-bg: #0f172a;
+    --aurora-text-primary: #f1f5f9;
+    --aurora-text-secondary: #94a3b8;
+    --aurora-text-muted: #64748b;
+    --aurora-row-hover: #1e293b;
+    --aurora-selected-row: #1e3a5f;
+    --aurora-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --aurora-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    --aurora-tag-work-bg: #1e3a5f;
+    --aurora-tag-work-text: #93bbfd;
+    --aurora-tag-notes-bg: #14532d;
+    --aurora-tag-notes-text: #86efac;
+    --aurora-tag-finance-bg: #14532d;
+    --aurora-tag-finance-text: #86efac;
+    --aurora-tag-billing-bg: #431407;
+    --aurora-tag-billing-text: #fdba74;
+    --aurora-tag-personal-bg: #3b0764;
+    --aurora-tag-personal-text: #d8b4fe;
+    --aurora-tag-high-bg: #450a0a;
+    --aurora-tag-high-text: #fca5a5;
+    --aurora-tag-important-bg: #1e3a5f;
+    --aurora-tag-important-text: #93bbfd;
+    --aurora-tag-legal-bg: #431407;
+    --aurora-tag-legal-text: #fdba74;
+    --aurora-tag-priority-bg: #450a0a;
+    --aurora-tag-priority-text: #fca5a5;
+    --aurora-tag-facilities-bg: #14532d;
+    --aurora-tag-facilities-text: #86efac;
+  }
+}
