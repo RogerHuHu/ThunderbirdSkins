@@ -148,14 +148,14 @@ li[is="folder-tree-row"] > .container > .name,
 
 /* ===== Titlebar ===== */
 #titlebar {
-  background: var(--aurora-toolbar-bg) !important;
+  background: linear-gradient(to right, #a8c8ff, #c9b8f5) !important;
 }
 
 /* ===== Unified Toolbar ===== */
 #unifiedToolbar {
-  background: var(--aurora-toolbar-bg) !important;
-  border-bottom: 1px solid var(--aurora-border-light) !important;
-  box-shadow: var(--aurora-shadow) !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: none !important;
   min-height: 42px !important;
   padding: 4px 12px !important;
 }
@@ -173,10 +173,12 @@ li[is="folder-tree-row"] > .container > .name,
   padding: 6px 12px !important;
   transition: all 0.15s ease !important;
   font-size: 13px !important;
+  color: #1e293b !important;
 }
 
 #unifiedToolbar toolbarbutton:hover {
-  background: var(--aurora-row-hover) !important;
+  background: rgba(255, 255, 255, 0.35) !important;
+  color: #0f172a !important;
 }
 
 /* New Message button - prominent */
@@ -592,20 +594,26 @@ body:is(.layout-classic, .layout-vertical, .layout-wide)
   margin-bottom: 12px !important;
 }
 
-/* From/To labels */
-.message-header-label,
-.header-row .header-label {
-  color: var(--aurora-text-muted) !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
+/* From/To/CC/Reply-To email addresses and names */
+#messageHeader .header-recipient,
+#messageHeader .header-recipient span,
+#messageHeader .recipient-multi-line-name,
+#messageHeader .recipient-multi-line-address,
+#messageHeader .recipient-single-line {
+  color: #2c5ef4 !important;
 }
 
-/* From/To values */
-.message-header-value,
-.header-row .header-value,
-#messageHeader .header-value {
-  color: var(--aurora-accent) !important;
-  font-size: 13px !important;
+/* Keep subject and labels black */
+#messageHeader .subject,
+.message-header-subject,
+#expandedsubjectBox {
+  color: var(--aurora-text-primary) !important;
+}
+
+.message-header-label,
+.header-row .header-label,
+#messageHeader .row-heading {
+  color: var(--aurora-text-primary) !important;
 }
 
 /* ===== Header action buttons (回复/全部回复/转发/归档/垃圾/删除/更多) =====
@@ -906,12 +914,21 @@ splitter {
 }
 
 /* ===== Context Menus ===== */
-menupopup,
-[role="menu"] {
+/* TB 153: menupopup uses shadow DOM — outer element + ::part(content).
+   Style only ::part(content) to avoid double-layer effect. */
+menupopup {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+menupopup::part(content),
+[role="menu"]::part(content) {
   border-radius: var(--aurora-radius-lg) !important;
   border: 1px solid var(--aurora-border) !important;
   box-shadow: var(--aurora-shadow-md) !important;
   padding: 6px 0 !important;
+  background: var(--aurora-bg) !important;
 }
 
 menuitem,
