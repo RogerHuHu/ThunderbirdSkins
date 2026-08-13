@@ -7,7 +7,9 @@
  */
 
 /* ===== Message Body Font ===== */
-body {
+/* Exclude multimessage view (has #headingWrapper) and address book (has #booksPane)
+   — both are internal pages whose body styles must not be overridden */
+body:not(:has(#headingWrapper, #booksPane)) {
   font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei",
     "Helvetica Neue", Arial, sans-serif !important;
   font-size: 14px !important;
@@ -17,6 +19,19 @@ body {
   padding: 16px 20px !important;
   margin: 0 !important;
   max-width: none !important;
+}
+
+/* ===== Address Book Reset ===== */
+/* about:addressbook loads in a content browser, so the global rules above leak in.
+   Revert all overrides — the native aboutAddressBook.css handles its own grid layout. */
+body:has(#booksPane) {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  max-width: initial !important;
+  line-height: initial !important;
+  font-size: initial !important;
+  color: initial !important;
 }
 
 /* ===== Links ===== */
@@ -156,9 +171,15 @@ p {
 
 /* ===== Dark mode for message body ===== */
 @media (prefers-color-scheme: dark) {
-  body {
+  body:not(:has(#headingWrapper, #booksPane)) {
     color: #e2e8f0 !important;
     background: #0f172a !important;
+  }
+
+  /* Revert dark mode overrides for address book — native CSS variables handle dark mode */
+  body:has(#booksPane) {
+    background: transparent !important;
+    color: initial !important;
   }
 
   a {

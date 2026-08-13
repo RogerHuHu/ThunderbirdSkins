@@ -17,12 +17,12 @@
   /* Core palette — light blue sidebar theme */
   --aurora-bg: #ffffff;
   --aurora-sidebar-bg: #f0f5fa;
-  --aurora-sidebar-hover: #e3ecf5;
-  --aurora-sidebar-selected: #d4e3f3;
+  --aurora-sidebar-hover: #e4e9f7;
+  --aurora-sidebar-selected: #dce3ff;
   --aurora-sidebar-text: #2c3e50;
-  --aurora-accent: #3b82f6;
-  --aurora-accent-hover: #2563eb;
-  --aurora-accent-light: #eff6ff;
+  --aurora-accent: #0151f8;
+  --aurora-accent-hover: #0040cc;
+  --aurora-accent-light: #e8edff;
   --aurora-toolbar-bg: #ffffff;
   --aurora-border: #e2e8f0;
   --aurora-border-light: #f1f5f9;
@@ -31,7 +31,7 @@
   --aurora-text-secondary: #64748b;
   --aurora-text-muted: #94a3b8;
   --aurora-row-hover: #f8fafc;
-  --aurora-selected-row: #eff6ff;
+  --aurora-selected-row: #eef1ff;
   --aurora-radius: 8px;
   --aurora-radius-sm: 6px;
   --aurora-radius-lg: 12px;
@@ -143,7 +143,7 @@ li[is="folder-tree-row"] > .container > .name,
 #spacesToolbar button[selected="true"] {
   background: var(--aurora-accent-light) !important;
   color: var(--aurora-accent) !important;
-  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.15) !important;
+  box-shadow: 0 1px 3px rgba(1, 81, 248, 0.15) !important;
 }
 
 /* ===== Unified Toolbar ===== */
@@ -177,23 +177,48 @@ li[is="folder-tree-row"] > .container > .name,
 /* New Message button - prominent */
 #unifiedToolbar toolbarbutton[default="true"],
 #unifiedToolbar button.primary,
-#button-newmsg {
+#button-newmsg,
+toolbarbutton[label="New Message"],
+toolbarbutton[label="写信"],
+#unifiedToolbar toolbarbutton[command="cmd_newMessage"],
+#unifiedToolbar toolbarbutton[command="button_newmsg"],
+toolbarbutton#button-newmsg,
+toolbarbutton[default="true"] {
   background: var(--aurora-accent) !important;
   color: #ffffff !important;
   border: none !important;
   border-radius: var(--aurora-radius) !important;
   font-weight: 600 !important;
   padding: 8px 20px !important;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(1, 81, 248, 0.3) !important;
   transition: all 0.15s ease !important;
 }
 
 #unifiedToolbar toolbarbutton[default="true"]:hover,
 #unifiedToolbar button.primary:hover,
-#button-newmsg:hover {
+#button-newmsg:hover,
+toolbarbutton[label="New Message"]:hover,
+toolbarbutton[label="写信"]:hover,
+#unifiedToolbar toolbarbutton[command="cmd_newMessage"]:hover,
+#unifiedToolbar toolbarbutton[command="button_newmsg"]:hover,
+toolbarbutton#button-newmsg:hover,
+toolbarbutton[default="true"]:hover {
   background: var(--aurora-accent-hover) !important;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+  box-shadow: 0 4px 12px rgba(1, 81, 248, 0.4) !important;
   transform: translateY(-1px) !important;
+}
+
+/* Folder pane "写信" button — use background-color (NOT background shorthand,
+   which resets the background-image "+" icon to none).
+   The icon fill uses currentColor, so color:white keeps the "+" white. */
+#folderPaneWriteMessage {
+  background-color: var(--aurora-accent) !important;
+  color: #ffffff !important;
+}
+
+#folderPaneWriteMessage:hover {
+  background-color: var(--aurora-accent-hover) !important;
+  color: #ffffff !important;
 }
 
 /* Get Messages dropdown */
@@ -248,7 +273,7 @@ li[is="folder-tree-row"][data-server-type] > .container > .name {
 li[is="folder-tree-row"][data-server-type] > .container > .icon {
   --icon-color: var(--aurora-accent) !important;
   stroke: var(--aurora-accent) !important;
-  fill: rgba(59, 130, 246, 0.12) !important;
+  fill: rgba(1, 81, 248, 0.12) !important;
   inline-size: 18px !important;
   block-size: 18px !important;
 }
@@ -306,9 +331,9 @@ li[is="folder-tree-row"] > .container > .icon {
 
 /* Inbox — blue */
 li[is="folder-tree-row"][data-folder-type="inbox"] > .container > .icon {
-  --icon-color: #3b82f6 !important;
-  stroke: #3b82f6 !important;
-  fill: rgba(59, 130, 246, 0.15) !important;
+  --icon-color: #0151f8 !important;
+  stroke: #0151f8 !important;
+  fill: rgba(1, 81, 248, 0.15) !important;
 }
 
 /* Drafts — rose/pink */
@@ -454,7 +479,7 @@ li[is="folder-tree-row"]:not([data-folder-type]) > .container > .icon {
 #threadTree .tree-view-row[selected="true"] {
   background: var(--aurora-selected-row) !important;
   border-left: 2px solid var(--aurora-accent) !important;
-  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(1, 81, 248, 0.08) !important;
 }
 
 /* Sender name */
@@ -527,6 +552,24 @@ li[is="folder-tree-row"]:not([data-folder-type]) > .container > .icon {
   background: var(--aurora-content-bg) !important;
 }
 
+/* ----- about3Pane: prevent horizontal overflow at container level -----
+   The 3-pane layout body must never overflow horizontally. Constrain all
+   browsers inside #messagePane to the pane's width, and clip any stray
+   content on the body itself. This stops the multimessage view (or any
+   other pane content) from being "pushed right" and clipped. */
+body:is(.layout-classic, .layout-vertical, .layout-wide) {
+  overflow-x: clip !important;
+  max-width: 100vw !important;
+}
+
+body:is(.layout-classic, .layout-vertical, .layout-wide)
+  #messagePane
+  :is(#webBrowser, #messageBrowser, #multiMessageBrowser) {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 /* Message header area */
 #messageHeader,
 .message-header-container {
@@ -560,32 +603,58 @@ li[is="folder-tree-row"]:not([data-folder-type]) > .container > .icon {
   font-size: 13px !important;
 }
 
-/* Reply/Reply All/Forward buttons */
-#messageHeader toolbarbutton,
-.message-header-actions toolbarbutton,
-#hdrReplyButton,
-#hdrReplyAllButton,
-#hdrForwardButton {
+/* ===== Header action buttons (回复/全部回复/转发/归档/垃圾/删除/更多) =====
+   Real DOM (TB 153): html:div#header-view-toolbox > hbox#header-view-toolbar
+   > XUL toolbarbutton.toolbarbutton-1.message-header-view-button.
+   Icons are drawn via list-style-image (.toolbarbutton-icon child), so use
+   background-color (never the background: shorthand). No forced heights —
+   they distort the icon images. */
+#messageHeader .toolbarbutton-1.message-header-view-button {
   border-radius: var(--aurora-radius-sm) !important;
   border: 1px solid var(--aurora-border) !important;
-  background: var(--aurora-bg) !important;
-  padding: 8px 16px !important;
-  font-size: 13px !important;
+  background-color: var(--aurora-bg) !important;
+  padding: 4px 10px !important;
+  font-size: 12.5px !important;
   font-weight: 500 !important;
   color: var(--aurora-text-primary) !important;
-  transition: all 0.15s ease !important;
   box-shadow: var(--aurora-shadow) !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease !important;
 }
 
-#messageHeader toolbarbutton:hover,
-.message-header-actions toolbarbutton:hover,
-#hdrReplyButton:hover,
-#hdrReplyAllButton:hover,
-#hdrForwardButton:hover {
-  background: var(--aurora-row-hover) !important;
+#messageHeader .toolbarbutton-1.message-header-view-button:not([disabled]):hover {
+  background-color: var(--aurora-row-hover) !important;
   border-color: var(--aurora-accent) !important;
   color: var(--aurora-accent) !important;
-  box-shadow: var(--aurora-shadow-md) !important;
+}
+
+#messageHeader .toolbarbutton-1.message-header-view-button:not([disabled])[open] {
+  background-color: var(--aurora-accent-light) !important;
+  border-color: var(--aurora-accent) !important;
+  color: var(--aurora-accent) !important;
+}
+
+/* Split button (全部回复/回复列表/跟进): outer element keeps the frame,
+   inner parts stay transparent so it renders as one unified button.
+   Correct selector is [is="toolbarbutton-menu-button"] — NOT [type="menu-button"]. */
+#messageHeader .message-header-view-button[is="toolbarbutton-menu-button"] {
+  padding: 0 !important;
+}
+
+#messageHeader .message-header-view-button[is="toolbarbutton-menu-button"]
+  > .toolbarbutton-menubutton-button,
+#messageHeader .message-header-view-button[is="toolbarbutton-menu-button"]
+  > .toolbarbutton-menubutton-dropmarker {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 10px !important;
+}
+
+#messageHeader .message-header-view-button[is="toolbarbutton-menu-button"]
+  > .toolbarbutton-menubutton-dropmarker {
+  border-inline-start: 1px solid var(--aurora-border) !important;
+  padding-inline: 6px !important;
 }
 
 /* Message tags in header (Important, Work, etc.) */
@@ -602,6 +671,82 @@ li[is="folder-tree-row"]:not([data-folder-type]) > .container > .icon {
 #messageBrowser,
 #messagepane {
   background: var(--aurora-content-bg) !important;
+}
+
+/* ===== Multi-message summary view (thread with multiple messages) =====
+   This view (multimessageview.xhtml) replaces the normal header when several
+   messages are selected. Fix the whole view being pushed right / clipped at
+   the right edge. Scoped strictly to this document via :has(#headingWrapper),
+   which exists only here — nothing else is affected. */
+/* NOTE: html prefix required to beat userContent.css body{max-width:none!important}
+   which would otherwise let padding push body to 898px in an 858px viewport. */
+html body:has(#headingWrapper) {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  padding: 0 !important;
+  overflow-x: clip !important;
+  background-color: var(--aurora-content-bg) !important;
+}
+
+/* Header row: subject + 归档/删除 buttons. Give the title room to shrink and
+   wrap so the action buttons are never pushed past the right edge. */
+html body:has(#headingWrapper) #headingWrapper {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: var(--aurora-content-bg) !important;
+  border-bottom: 1px solid var(--aurora-border-light) !important;
+}
+
+html body:has(#headingWrapper) #headingWrapper > #heading {
+  min-width: 0 !important;
+  overflow-wrap: anywhere !important;
+  color: var(--aurora-text-primary) !important;
+}
+
+html body:has(#headingWrapper) #headingWrapper > #header-view-toolbox {
+  flex-shrink: 0 !important;
+  min-width: 0 !important;
+}
+
+/* Body list: make sure long snippets/signatures wrap instead of widening the
+   view, and keep left alignment. Also clip any stray horizontal overflow. */
+html body:has(#headingWrapper) #content {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  overflow-x: clip !important;
+}
+
+html body:has(#headingWrapper) #messageList,
+html body:has(#headingWrapper) #messageList .snippet,
+html body:has(#headingWrapper) #messageList .author,
+html body:has(#headingWrapper) #messageList .subject {
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Style the 归档/删除 buttons to match the rest of the theme. These are
+   .toolbarbutton-1.message-header-view-button but NOT inside #messageHeader,
+   so the header rules above don't reach them. */
+html body:has(#headingWrapper) #header-view-toolbar .message-header-view-button {
+  border-radius: var(--aurora-radius-sm) !important;
+  border: 1px solid var(--aurora-border) !important;
+  background-color: var(--aurora-bg) !important;
+  padding: 4px 10px !important;
+  font-size: 12.5px !important;
+  color: var(--aurora-text-primary) !important;
+  box-shadow: var(--aurora-shadow) !important;
+}
+
+html body:has(#headingWrapper)
+  #header-view-toolbar
+  .message-header-view-button:not([disabled]):hover {
+  background-color: var(--aurora-row-hover) !important;
+  border-color: var(--aurora-accent) !important;
+  color: var(--aurora-accent) !important;
 }
 
 /* ===== Tabs ===== */
@@ -709,14 +854,14 @@ button[default="true"] {
   border-radius: var(--aurora-radius) !important;
   font-weight: 600 !important;
   padding: 8px 20px !important;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(1, 81, 248, 0.25) !important;
   transition: all 0.15s ease !important;
 }
 
 button.primary:hover,
 button[default="true"]:hover {
   background: var(--aurora-accent-hover) !important;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35) !important;
+  box-shadow: 0 4px 12px rgba(1, 81, 248, 0.35) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -805,7 +950,7 @@ treechildren::-moz-tree-separator {
 
 /* Subtle focus rings */
 :focus-visible {
-  outline: 2px solid rgba(59, 130, 246, 0.4) !important;
+  outline: 2px solid rgba(1, 81, 248, 0.4) !important;
   outline-offset: -1px !important;
   border-radius: var(--aurora-radius-sm) !important;
 }
@@ -840,7 +985,7 @@ treechildren::-moz-tree-separator {
 
 #qfb-qs-textbox:focus {
   border-color: var(--aurora-accent) !important;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important;
+  box-shadow: 0 0 0 3px rgba(1, 81, 248, 0.12) !important;
 }
 
 /* ===== Notifications ===== */
@@ -870,12 +1015,12 @@ treechildren::-moz-tree-separator {
   :root {
     --aurora-bg: #0f172a;
     --aurora-sidebar-bg: #162033;
-    --aurora-sidebar-hover: #1e3050;
-    --aurora-sidebar-selected: #1e3a5f;
+    --aurora-sidebar-hover: #1e2d4a;
+    --aurora-sidebar-selected: #1a2d5a;
     --aurora-sidebar-text: #e2e8f0;
-    --aurora-accent: #60a5fa;
-    --aurora-accent-hover: #93bbfd;
-    --aurora-accent-light: #1e3a5f;
+    --aurora-accent: #5b8def;
+    --aurora-accent-hover: #82a8f5;
+    --aurora-accent-light: #1a2d5a;
     --aurora-toolbar-bg: #1e293b;
     --aurora-border: #334155;
     --aurora-border-light: #293548;
@@ -884,12 +1029,12 @@ treechildren::-moz-tree-separator {
     --aurora-text-secondary: #94a3b8;
     --aurora-text-muted: #64748b;
     --aurora-row-hover: #1e293b;
-    --aurora-selected-row: #1e3a5f;
+    --aurora-selected-row: #1a2d5a;
     --aurora-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     --aurora-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
 
-    --aurora-tag-work-bg: #1e3a5f;
-    --aurora-tag-work-text: #93bbfd;
+    --aurora-tag-work-bg: #1a2d5a;
+    --aurora-tag-work-text: #82a8f5;
     --aurora-tag-notes-bg: #14532d;
     --aurora-tag-notes-text: #86efac;
     --aurora-tag-finance-bg: #14532d;
@@ -900,8 +1045,8 @@ treechildren::-moz-tree-separator {
     --aurora-tag-personal-text: #d8b4fe;
     --aurora-tag-high-bg: #450a0a;
     --aurora-tag-high-text: #fca5a5;
-    --aurora-tag-important-bg: #1e3a5f;
-    --aurora-tag-important-text: #93bbfd;
+    --aurora-tag-important-bg: #1a2d5a;
+    --aurora-tag-important-text: #82a8f5;
     --aurora-tag-legal-bg: #431407;
     --aurora-tag-legal-text: #fdba74;
     --aurora-tag-priority-bg: #450a0a;
