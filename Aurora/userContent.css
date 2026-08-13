@@ -22,9 +22,11 @@ body:not(:has(#headingWrapper, #booksPane)) {
 }
 
 /* ===== Address Book Reset ===== */
-/* about:addressbook loads in a content browser, so the global rules above leak in.
-   Revert all overrides — the native aboutAddressBook.css handles its own grid layout. */
+/* about:addressbook loads in a content browser, so ALL global rules above leak in.
+   The tree-view uses <table>/<td>, card rows use <span>/<p> — these must be reverted
+   so the native aboutAddressBook.css and tree-listbox.css can style them properly. */
 body:has(#booksPane) {
+  /* body overrides */
   padding: 0 !important;
   margin: 0 !important;
   background: transparent !important;
@@ -32,6 +34,59 @@ body:has(#booksPane) {
   line-height: initial !important;
   font-size: initial !important;
   color: initial !important;
+}
+
+body:has(#booksPane) table {
+  border-collapse: separate !important;
+  max-width: initial !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+body:has(#booksPane) :is(td, th) {
+  padding: initial !important;
+  border: none !important;
+}
+
+body:has(#booksPane) th {
+  background: initial !important;
+  font-weight: initial !important;
+  color: initial !important;
+}
+
+body:has(#booksPane) span {
+  overflow: initial !important;
+  text-overflow: initial !important;
+}
+
+body:has(#booksPane) p {
+  margin: initial !important;
+}
+
+body:has(#booksPane) :is(h1, h2, h3, h4, h5, h6) {
+  color: initial !important;
+  font-weight: initial !important;
+  line-height: initial !important;
+}
+
+body:has(#booksPane) :is(ul, ol) {
+  padding-left: initial !important;
+  margin: initial !important;
+}
+
+body:has(#booksPane) li {
+  margin: initial !important;
+  line-height: initial !important;
+}
+
+body:has(#booksPane) hr {
+  border: initial !important;
+  margin: initial !important;
+}
+
+body:has(#booksPane) img {
+  max-width: initial !important;
+  border-radius: initial !important;
 }
 
 /* ===== Links ===== */
@@ -180,6 +235,35 @@ p {
   body:has(#booksPane) {
     background: transparent !important;
     color: initial !important;
+  }
+
+  body:has(#booksPane) :is(h1, h2, h3, h4, h5, h6) {
+    color: initial !important;
+  }
+
+  body:has(#booksPane) hr {
+    border-top-color: initial !important;
+  }
+
+  body:has(#booksPane) :is(td, th) {
+    border-color: initial !important;
+  }
+
+  body:has(#booksPane) th {
+    background: initial !important;
+    color: initial !important;
+  }
+
+  body:has(#booksPane) :is(pre, code) {
+    background: initial !important;
+    color: initial !important;
+    border-color: initial !important;
+  }
+
+  body:has(#booksPane) blockquote {
+    border-left-color: initial !important;
+    color: initial !important;
+    background: initial !important;
   }
 
   a {
