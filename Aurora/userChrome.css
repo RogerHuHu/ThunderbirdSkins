@@ -146,6 +146,11 @@ li[is="folder-tree-row"] > .container > .name,
   box-shadow: 0 1px 3px rgba(1, 81, 248, 0.15) !important;
 }
 
+/* ===== Titlebar ===== */
+#titlebar {
+  background: var(--aurora-toolbar-bg) !important;
+}
+
 /* ===== Unified Toolbar ===== */
 #unifiedToolbar {
   background: var(--aurora-toolbar-bg) !important;
