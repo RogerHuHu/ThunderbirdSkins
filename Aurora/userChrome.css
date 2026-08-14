@@ -14,6 +14,9 @@
   --aurora-font: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei",
     "Helvetica Neue", Arial, sans-serif;
 
+  /* Layout — titlebar height for spaces toolbar offset */
+  --aurora-titlebar-height: 52px;
+
   /* Core palette — light blue sidebar theme */
   --aurora-bg: #ffffff;
   --aurora-sidebar-bg: #f0f5fa;
@@ -23,6 +26,7 @@
   --aurora-accent: #0151f8;
   --aurora-accent-hover: #0040cc;
   --aurora-accent-light: #e8edff;
+  --aurora-badge-bg: #c783ff;
   --aurora-toolbar-bg: #ffffff;
   --aurora-border: #e2e8f0;
   --aurora-border-light: #f1f5f9;
@@ -146,9 +150,31 @@ li[is="folder-tree-row"] > .container > .name,
   box-shadow: 0 1px 3px rgba(1, 81, 248, 0.15) !important;
 }
 
+#spacesToolbar .spaces-badge-container {
+  background-color: #c7baf6 !important;
+  color: #ffffff !important;
+}
+
 /* ===== Titlebar ===== */
 #titlebar {
   background: linear-gradient(to right, #a8c8ff, #c9b8f5) !important;
+}
+
+/* ===== Layout: Titlebar full width, sidebar below ===== */
+/* Override native layout: titlebar spans full width, spaces toolbar starts below */
+#spacesToolbar:not([hidden]) {
+  inset-block-start: var(--aurora-titlebar-height) !important;
+  inset-block-end: 0 !important;
+}
+
+/* Remove left margin from titlebar so it spans full width */
+#spacesToolbar:not([hidden]) ~ #navigation-toolbox #titlebar {
+  margin-inline-start: 0 !important;
+}
+
+/* Unified toolbar container spans full viewport width */
+#spacesToolbar:not([hidden]) ~ #navigation-toolbox #unifiedToolbarContainer {
+  inline-size: 100vw !important;
 }
 
 /* ===== Unified Toolbar ===== */
@@ -316,11 +342,21 @@ li[is="folder-tree-row"] > .container > .name {
 }
 
 /* Unread count badge */
-li[is="folder-tree-row"] > .container > .folder-count-badge,
-li[is="folder-tree-row"] > .container > .unread-count {
+li[is="folder-tree-row"] > .container > .folder-count-badge {
   font-size: 11px !important;
   font-weight: 600 !important;
   background: var(--aurora-accent) !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+  padding: 1px 7px !important;
+  min-width: 20px !important;
+  text-align: center !important;
+}
+
+li[is="folder-tree-row"] > .container > .unread-count {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  background: var(--aurora-badge-bg) !important;
   color: #ffffff !important;
   border-radius: 10px !important;
   padding: 1px 7px !important;
