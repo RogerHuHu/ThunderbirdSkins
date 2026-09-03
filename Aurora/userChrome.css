@@ -895,8 +895,10 @@ button[type="toolbar"] {
   background: var(--aurora-row-hover) !important;
 }
 
-button.primary,
-button[default="true"] {
+/* Only explicit HTML primary buttons get Aurora's custom surface.  Do not use
+ * [default="true"] here: Thunderbird also puts that attribute on native XUL
+ * dialog buttons whose Windows appearance can ignore custom backgrounds. */
+button.primary {
   background: var(--aurora-accent) !important;
   color: white !important;
   border: none !important;
@@ -907,11 +909,17 @@ button[default="true"] {
   transition: all 0.15s ease !important;
 }
 
-button.primary:hover,
-button[default="true"]:hover {
+button.primary:hover {
   background: var(--aurora-accent-hover) !important;
   box-shadow: 0 4px 12px rgba(1, 81, 248, 0.35) !important;
   transform: translateY(-1px) !important;
+}
+
+/* Keep native default buttons readable even when their internal dialog markup
+ * is not exposed to userChrome.css (notably the Windows “Open with” dialog). */
+button[default="true"]:not(.primary) {
+  color: ButtonText !important;
+  text-shadow: none !important;
 }
 
 /* ===== Splitter / Pane Separators ===== */
