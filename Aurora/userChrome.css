@@ -577,6 +577,96 @@ li[is="folder-tree-row"]:not([data-folder-type]) > .container > .icon {
   border-bottom: 1px solid rgba(226, 232, 240, 0.5) !important;
 }
 
+/* Aurora continuous message list (current Thunderbird thread-card DOM).
+ * Keep native row heights: the virtual scroller calculates them in JS.
+ * Preserve thread-child indentation and native unread/star/attachment controls. */
+#threadTree[rows="thread-card"] {
+  padding-block: 0 !important;
+  --tree-view-bg: var(--aurora-content-bg);
+  --tree-pane-background: var(--aurora-content-bg);
+  --tree-view-color: var(--aurora-text-primary);
+}
+
+#threadTree[rows="thread-card"] .card-layout > td {
+  padding-block: 0 !important;
+  padding-inline-end: 0 !important;
+}
+
+#threadTree[rows="thread-card"] .card-layout:not([data-properties~="thread-children"]) > td {
+  padding-inline-start: 0 !important;
+}
+
+#threadTree[rows="thread-card"] .card-layout > td > .card-container {
+  background: var(--aurora-content-bg) !important;
+  color: var(--aurora-text-primary) !important;
+  border: 0 !important;
+  border-block-end: 1px solid var(--aurora-border-light) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding-inline: 8px !important;
+  font-family: var(--aurora-font) !important;
+}
+
+#threadTree[rows="thread-card"] .card-layout:hover > td > .card-container {
+  background: var(--aurora-row-hover) !important;
+}
+
+/* Same selection color when focus moves into the reading pane. An inset stripe
+ * does not change available text width or shift the row on selection. */
+#threadTree[rows="thread-card"] .card-layout.selected > td > .card-container {
+  background: var(--aurora-selected-row) !important;
+  box-shadow: inset 3px 0 var(--aurora-accent) !important;
+  border-radius: 0 var(--aurora-radius-sm) var(--aurora-radius-sm) 0 !important;
+}
+
+#threadTree[rows="thread-card"]:dir(rtl) .card-layout.selected > td > .card-container {
+  box-shadow: inset -3px 0 var(--aurora-accent) !important;
+  border-radius: var(--aurora-radius-sm) 0 0 var(--aurora-radius-sm) !important;
+}
+
+/* Retain a separate keyboard-current/right-click indicator, including during
+ * multiselection. Never use the selection stripe as the only focus cue. */
+#threadTree[rows="thread-card"]:focus-within .card-layout.current > td > .card-container,
+#threadTree[rows="thread-card"] .card-layout.context-menu-target > td > .card-container {
+  outline: 1px solid var(--aurora-accent) !important;
+  outline-offset: -2px !important;
+}
+
+#threadTree[rows="thread-card"] .card-layout .card-container .sender {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: var(--aurora-text-primary) !important;
+}
+
+#threadTree[rows="thread-card"] .card-layout .card-container .subject {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: var(--aurora-text-secondary) !important;
+}
+
+#threadTree[rows="thread-card"] .card-layout[data-properties~="unread"] .card-container .sender {
+  font-weight: 700 !important;
+}
+
+#threadTree[rows="thread-card"] .card-layout[data-properties~="unread"] .card-container .subject {
+  font-weight: 500 !important;
+  color: var(--aurora-text-primary) !important;
+}
+
+#threadTree[rows="thread-card"] .card-layout .card-container .date {
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  color: var(--aurora-text-secondary) !important;
+  opacity: 1 !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Recolor the native unread indicator; new mail keeps its native sparkle. */
+#threadTree[rows="thread-card"] .card-layout[data-properties~="unread"] {
+  --read-status-fill: var(--aurora-accent) !important;
+  --read-status-stroke: var(--aurora-accent) !important;
+}
+
 /* ===== Tag Badges in Message List ===== */
 /* These target the tag label elements in the thread tree */
 #threadTree .tag-cell label,
@@ -982,6 +1072,15 @@ menuitem,
   padding: 6px 12px !important;
   font-size: 13px !important;
   transition: all 0.1s ease !important;
+}
+
+/* Match Thunderbird's submenu headers in the message context menu. The
+ * generic menuitem spacing above otherwise indents actions such as Edit as
+ * New Message, Save As and Print by an extra 6px. Direct children only: keep
+ * the navigation icon row and nested menus independent. */
+#mailContext > menuitem {
+  margin-inline: 4px !important;
+  padding-inline: 8px !important;
 }
 
 menuitem:hover,
